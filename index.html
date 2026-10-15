@@ -415,7 +415,6 @@
   .try-steps li { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; background: #fff; border: 1px solid #cfe0d2; padding: 6px 14px 6px 6px; font-size: 15px; font-weight: 800; color: var(--brand); }
   .try-steps li b { width: 26px; height: 26px; border-radius: 999px; background: var(--brand); color: #fff; display: inline-grid; place-items: center; font-size: 13px; }
   .try-steps li:not(:last-child)::after { content: "→"; margin-left: 4px; color: var(--sage); }
-  .demo .url { margin-top: 0; background: var(--brand); color: #fff; font-size: 17px; padding: 12px 22px; white-space: nowrap; overflow-wrap: normal; }
   .demo .qr { flex-shrink: 0; padding: 16px 16px 12px; box-shadow: 0 8px 22px rgba(24,76,61,.12); border: 1px solid var(--line); }
   .demo .qr svg { width: 170px; height: 170px; }
   .copy-btn { min-height: 46px; font-size: 15px; }
@@ -440,7 +439,6 @@
   @media (max-width: 480px) {
     .try-steps { flex-direction: column; align-items: flex-start; }
     .try-steps li:not(:last-child)::after { content: ""; margin: 0; }
-    .demo .url { font-size: 15px; padding: 12px 16px; }
   }
   @media print {
     .demo-intro { gap: 10px; }
@@ -448,6 +446,51 @@
     .try-steps li { font-size: 13px; padding: 4px 12px 4px 4px; }
     .demo .samples { margin-top: 12px; }
     .kpt p { font-size: 14px; }
+  }
+
+
+  /* ── 최종 디자인 보완 (2026-10-15) ── */
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  /* 1) 체험 영역 메인 CTA: QR·예시 카드보다 먼저 보이도록 */
+  .cta-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 4px; }
+  .cta { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 68px; padding: 0 36px; border-radius: 999px;
+    background: var(--brand); color: #fff; font-size: 22px; font-weight: 800; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap;
+    box-shadow: 0 10px 24px rgba(24,76,61,.28), 0 0 0 5px #cfe0d2; transition: background .15s, transform .15s; }
+  .cta:hover { background: var(--brand-2); transform: translateY(-1px); }
+  .cta:focus-visible { outline: 3px solid var(--brand); outline-offset: 6px; }
+  .cta span[aria-hidden] { font-size: 1.15em; line-height: 1; }
+  .cta-url { padding-left: 8px; font-size: 15px; font-weight: 700; color: var(--brand); letter-spacing: .01em; }
+  .demo .qr { box-shadow: none; border: 1px solid var(--line); padding: 14px 14px 10px; }
+  .demo .qr svg { width: 140px; height: 140px; }
+  .demo .qr p { font-size: 13px; color: var(--subtle); }
+  /* 2) 회고 카드: 문구 그대로, 여백·줄 간격만 */
+  .kpt { align-items: stretch; gap: 18px; }
+  .kpt > div { padding: 30px 30px 32px; gap: 0; }
+  .kpt .badge { margin-bottom: 16px; }
+  .kpt h3 { font-size: 19px; line-height: 1.45; min-height: 2.9em; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .t h3 { border-bottom-color: rgba(255,255,255,.18); }
+  .kpt p { font-size: 15.5px; line-height: 1.9; }
+  /* 3) 작은 설명 글자 대비: HERO 소개 문구, KPI 보조 지표·검증 안내만 */
+  .cover-desc { opacity: 1; color: #1f3329; line-height: 1.65; }
+  .kpi .metric-list li { color: #1f3329; }
+  .kpi .kpi-method p { color: #1f3329; }
+  .kpi .kpi-method .kpi-note { color: #33473d; line-height: 1.65; }
+  @media (max-width: 860px) {
+    .kpt h3 { min-height: 0; }
+  }
+  @media (max-width: 480px) {
+    .cta-wrap { align-self: stretch; }
+    .cta { width: 100%; min-height: 62px; padding: 10px 16px; gap: 8px; font-size: clamp(16px, 4.6vw, 19px); white-space: normal; text-align: center; }
+    .cta-url { align-self: center; padding-left: 0; }
+    .kpt > div { padding: 26px 22px 28px; }
+  }
+  @media print {
+    .cta { min-height: 56px; font-size: 19px; padding: 0 28px; }
+    .demo .qr svg { width: 120px; height: 120px; }
+    .kpt > div { padding: 22px 22px 24px; }
+    .kpt .badge { margin-bottom: 10px; }
+    .kpt h3 { margin-bottom: 10px; padding-bottom: 10px; }
+    .kpt p { font-size: 14px; line-height: 1.75; }
   }
 
   /* ── PDF(인쇄): 한 장에 한 섹션 ── */
@@ -611,7 +654,10 @@
           <li><b>2</b>서비스 접속</li>
           <li><b>3</b>예약 안내문 붙여넣기</li>
         </ol>
-        <a class="url" href="https://afterbook-nine.vercel.app/" target="_blank" rel="noopener">afterbook-nine.vercel.app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        <div class="cta-wrap">
+          <a class="cta" href="https://afterbook-nine.vercel.app/" target="_blank" rel="noopener">AfterBook 웹사이트 체험하기 <span aria-hidden="true">→</span><span class="sr-only"> (새 창에서 열림)</span></a>
+          <span class="cta-url">afterbook-nine.vercel.app</span>
+        </div>
         <span class="disclaimer">※ 실제 업체·서비스가 보낸 메시지가 아닌 가상 체험 예시예요</span>
       </div>
       <a class="qr" href="https://afterbook-nine.vercel.app/" target="_blank" rel="noopener" aria-label="AfterBook 서비스 QR 코드 (새 창에서 열림)">
